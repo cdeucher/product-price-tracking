@@ -33,7 +33,7 @@ variable "service_account_ci_arn" {
 # Lambda Title
 variable "lambda_env" {
     description = "Lambda environment"
-    type = list(map(string))
+    type = map(string)
 }
 
 # DYNAMODB

@@ -8,6 +8,16 @@ variable "dymanodb_stream_arn" {
     description = "The ARN of the dynamodb stream resource"
     default     = []
 }
+variable "lambda_arn" {
+    type        = list(string)
+    description = "The ARN of the lambda resource"
+    default     = []
+}
+variable "external_policies_arn" {
+    type        = list(string)
+    description = "The ARN of the external policies"
+    default     = []
+}
 variable "src_path" {
     description = "Path to the source code"
     type        = string

@@ -44,3 +44,21 @@ module "get_method" {
   account_id              = var.accountId
   region                  = var.region
 }
+
+module "resource_subscription" {
+  source = "./apigateway/resource"
+  endpoint         = var.endpoint_sub
+  rest_api_id      = module.apigateway.rest_api_id
+  root_resource_id = module.resource_api.resource_id
+}
+
+module "get_sub_method" {
+  source = "./apigateway/get_method"
+  rest_api_id             = module.apigateway.rest_api_id
+  resource_id             = module.resource_subscription.resource_id
+  resource_path           = module.resource_subscription.resource_path
+  invoke_url              = module.lambda_subscription.invoke_arn
+  function_name           = module.lambda_subscription.function_name
+  account_id              = var.accountId
+  region                  = var.region
+}

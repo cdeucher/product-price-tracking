@@ -39,3 +39,24 @@ resource "aws_iam_role_policy_attachment" "dynamodb_access" {
     role       = aws_iam_role.role_for_lambda.name
     policy_arn = aws_iam_policy.dynamodb_access[0].arn
 }
+
+resource "aws_iam_policy" "lambda_access" {
+    count = length(var.lambda_arn) > 0 ? 1 : 0
+    name        = "${var.project}-${var.function_name}-lambda-access"
+    description = "IAM policy for Lambda"
+
+    policy = templatefile("${path.module}/policies/lambda_policy.json",{
+        arns = var.lambda_arn
+    })
+}
+resource "aws_iam_role_policy_attachment" "lambda_access" {
+    count = length(var.lambda_arn) > 0 ? 1 : 0
+    role       = aws_iam_role.role_for_lambda.name
+    policy_arn = aws_iam_policy.lambda_access[0].arn
+}
+
+resource "aws_iam_role_policy_attachment" "external_access" {
+    count = length(var.external_policies_arn) > 0 ? 1 : 0
+    role       = aws_iam_role.role_for_lambda.name
+    policy_arn = var.external_policies_arn[count.index]
+}

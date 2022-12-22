@@ -27,7 +27,7 @@ stage = "dev"
 # gcp_client_secret = ""
 
 # Lambda
-lambda_env = [{ TITLES_TABLE = "titles" }]
+lambda_env = { TITLES_TABLE = "titles" }
 
 # Dynamo
 tabe_name = "titles"
